@@ -157,6 +157,9 @@ module ActivePdftk
     def initialize(dsl_statements = {})
       @default_statements = dsl_statements
       @default_statements[:path] ||= locate_pdftk || "pdftk"
+      ptus "----------------------------------pdftk_version"
+      ptus pdftk_version
+      ptus "----------------------------------pdftk_version"
       raise MissingLibrary if pdftk_version.to_f == 0
     end
 
@@ -292,9 +295,6 @@ module ActivePdftk
     # @return [String]
     #
     def pdftk_version
-      puts "-------------------------------------------------------------------------------"
-      puts @default_statements.inspect
-      puts "-------------------------------------------------------------------------------"
       %x{#{@default_statements[:path]} --version 2>&1}.scan(/pdftk (\S*) a Handy Tool/).join
     end
 
