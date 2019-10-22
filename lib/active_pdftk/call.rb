@@ -303,7 +303,8 @@ module ActivePdftk
     #
     def self.locate_pdftk
       @pdftk_location ||= begin
-        auto_path = %x{locate pdftk | grep "/bin/pdftk"}.strip.split("\n").first
+        auto_path = %x{which pdftk}.strip
+        # auto_path = %x{locate pdftk | grep "/bin/pdftk"}.strip.split("\n").first
         #TODO find a valid Win32 procedure (not in my top priorities)
         (auto_path.nil? || auto_path.empty?) ? nil : auto_path
       end
