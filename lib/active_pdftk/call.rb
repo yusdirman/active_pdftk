@@ -292,6 +292,9 @@ module ActivePdftk
     # @return [String]
     #
     def pdftk_version
+      puts "-------------------------------------------------------------------------------"
+      puts @default_statements.inspect
+      puts "-------------------------------------------------------------------------------"
       %x{#{@default_statements[:path]} --version 2>&1}.scan(/pdftk (\S*) a Handy Tool/).join
     end
 
@@ -303,7 +306,8 @@ module ActivePdftk
     #
     def self.locate_pdftk
       @pdftk_location ||= begin
-        auto_path = %x{locate pdftk | grep "/bin/pdftk"}.strip.split("\n").first
+        auto_path = %x{which pdftk}.strip
+        # auto_path = %x{locate pdftk | grep "/bin/pdftk"}.strip.split("\n").first
         #TODO find a valid Win32 procedure (not in my top priorities)
         (auto_path.nil? || auto_path.empty?) ? nil : auto_path
       end
